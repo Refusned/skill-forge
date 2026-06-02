@@ -5,7 +5,7 @@
 Inspired by [Hermes Agent](https://github.com/NousResearch)'s reflective loop and [Anthropic's skills-first practice](https://code.claude.com/docs/en/skills), built entirely on Claude Code hooks — no external service, no server.
 
 <p align="center">
-  <img src="assets/demo.gif" alt="skill-forge in action: a queued session is captured, reflected on, and turned into skills behind a safety gate" width="800">
+  <img src="assets/demo-desktop.gif" alt="skill-forge in the Claude Code desktop app: a queued session is captured, reflected on, and turned into skills behind a safety gate" width="900">
 </p>
 
 > **Honest scope.** skill-forge does **not** rewrite your application code. It grows your agent's **skill library** — the procedures Claude reuses — so day 30 is sharper than day 1. The thing that self-improves is the *agent*, not your codebase.
