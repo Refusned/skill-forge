@@ -1,0 +1,9 @@
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Local runtime queue (lives in CLAUDE_PLUGIN_DATA, but ignore if anyone tests in-repo)
+inbox.jsonl
+inbox.processed.jsonl

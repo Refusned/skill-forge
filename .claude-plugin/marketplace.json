@@ -1,0 +1,16 @@
+{
+  "name": "refusned",
+  "owner": {
+    "name": "Roman Barmin",
+    "url": "https://github.com/Refusned"
+  },
+  "plugins": [
+    {
+      "name": "skill-forge",
+      "source": "./",
+      "description": "Self-learning loop: turn finished Claude Code sessions into reusable skills, with a safety gate.",
+      "version": "0.1.0",
+      "author": { "name": "Roman Barmin" }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "skill-forge",
+  "description": "Self-learning loop for Claude Code: turn finished sessions into reusable skills (capture → dedup → gated apply). Inspired by Hermes Agent + Anthropic's skills-first practice.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Roman Barmin",
+    "url": "https://github.com/Refusned"
+  },
+  "homepage": "https://github.com/Refusned/skill-forge",
+  "repository": "https://github.com/Refusned/skill-forge",
+  "license": "MIT",
+  "keywords": ["self-improving", "skills", "hooks", "automation", "hermes-agent", "claude-code"]
+}
