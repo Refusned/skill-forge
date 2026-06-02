@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>skill-forge demo</title>
+<style>
+  :root{
+    --bg:#1a1714; --bar:#2c2722; --fg:#e9e2d8; --dim:#8a8076;
+    --accent:#d68a4c; --green:#7bb661; --red:#e06a5a; --blue:#6fa8c7; --cyan:#69b7a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#0c0a08}
+  body{display:flex;align-items:center;justify-content:center;
+    font-family:"SF Mono",Menlo,Consolas,monospace}
+  .term{width:880px;height:560px;background:var(--bg);border-radius:12px;
+    box-shadow:0 24px 70px rgba(0,0,0,.55);overflow:hidden;border:1px solid #322c26}
+  .bar{height:42px;background:var(--bar);display:flex;align-items:center;padding:0 14px;gap:8px}
+  .dot{width:12px;height:12px;border-radius:50%}
+  .r{background:#e0655a}.y{background:#e2b54e}.g{background:#67c06a}
+  .title{color:var(--dim);font-size:13px;margin-left:10px;letter-spacing:.3px}
+  .body{padding:22px 26px;font-size:15.5px;line-height:1.65;color:var(--fg);
+    height:calc(100% - 42px);overflow:hidden;white-space:pre-wrap}
+  .dim{color:var(--dim)}.accent{color:var(--accent)}.green{color:var(--green)}
+  .red{color:var(--red)}.blue{color:var(--blue)}.cyan{color:var(--cyan)}.b{font-weight:600}
+  .prompt{color:var(--accent)}
+  .cur{display:inline-block;width:9px;height:17px;background:var(--fg);vertical-align:-3px;margin-left:1px}
+  .tag{display:inline-block;padding:1px 7px;border-radius:5px;font-size:12.5px;font-weight:600}
+  .tag.cap{background:rgba(111,168,199,.16);color:var(--blue)}
+  .tag.ok{background:rgba(123,182,97,.16);color:var(--green)}
+  .tag.gate{background:rgba(224,106,90,.16);color:var(--red)}
+</style>
+</head>
+<body>
+  <div class="term">
+    <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="title">claude — skill-forge</span></div>
+    <div class="body" id="b"></div>
+  </div>
+<script>
+// Deterministic, time-addressable demo. seek(ms) renders the exact state at time ms.
+const CMD='/skill-forge:forge';
+const L = [
+  {t:0,    h:'<span class="dim">$</span> claude'},
+  {t:500,  h:'<span class="dim">resuming session…</span>'},
+  {t:950,  h:'&nbsp;'},
+  {t:1150, h:'<span class="tag cap">SessionEnd hook</span> <span class="dim">captured 1 session (146 tool calls) → queue</span>'},
+  {t:2000, h:'<span class="accent b">📌 skill-forge:</span> 1 past session queued for distillation into skills'},
+  {t:2500, h:'<span class="dim">   run </span><span class="accent">/skill-forge:forge</span><span class="dim"> when you have a moment</span>'},
+  {t:3300, h:'&nbsp;'},
+  {t:3500, cmd:true},                 // typed command
+  {t:4900, h:'&nbsp;'},
+  {t:5100, h:'<span class="cyan">⠿ reflecting</span> <span class="dim">on the session…</span>'},
+  {t:5900, h:'<span class="dim">  • repeated pattern:</span> stock-sync via external API'},
+  {t:6600, h:'<span class="dim">  • recurring fix:</span> return <span class="b">None</span>, not <span class="b">0.0</span>, on a missing metric'},
+  {t:7600, h:'&nbsp;'},
+  {t:7800, h:'<span class="b">Proposals</span> <span class="dim">(gated):</span>'},
+  {t:8400, h:'  <span class="tag ok">low-risk</span> add “Got X” to <span class="b">verifier-add</span> <span class="green">→ applied ✓</span>'},
+  {t:9300, h:'  <span class="tag gate">high-risk</span> new skill <span class="b">stock-sync</span> <span class="red">→ awaiting your approval</span>'},
+  {t:10500,h:'&nbsp;'},
+  {t:10750,h:'<span class="green b">✓ skills updated.</span> <span class="dim">day 30 &gt; day 1.</span>'},
+];
+const CMD_START=3500, CMD_PER=62; // ms per char
+const b=document.getElementById('b');
+function seek(ms){
+  let out='';
+  for(const ln of L){
+    if(ms < ln.t) break;
+    if(ln.cmd){
+      const k=Math.max(0,Math.min(CMD.length, Math.floor((ms-CMD_START)/CMD_PER)));
+      const typing = (ms-CMD_START) < CMD.length*CMD_PER;
+      const blink = typing ? (Math.floor(ms/450)%2? '<span class="cur"></span>':'') : '';
+      out += '<div><span class="prompt">›</span> <span class="accent">'+CMD.slice(0,k)+'</span>'+blink+'</div>';
+    } else {
+      out += '<div>'+ln.h+'</div>';
+    }
+  }
+  b.innerHTML=out;
+}
+window.seek=seek;
+window.DURATION=12000;
+seek(0);
+</script>
+</body>
+</html>
